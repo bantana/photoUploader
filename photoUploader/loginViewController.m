@@ -27,10 +27,11 @@
 
 -(IBAction)login:(id)sender
 {
-    [self.loginModel receiveLoginCredentials:userNameField.text:passWordField.text];
-    _loginModel.delegate = self;
-    
-    [myIndicator startAnimating];
+    if ([userNameField.text length] > 0 && [passWordField.text length] > 0) {   
+        [self.loginModel receiveLoginCredentials:userNameField.text:passWordField.text];
+        _loginModel.delegate = self;
+        [myIndicator startAnimating];
+    }
 }
 
 - (void)loginSucceeded:(NSMutableArray *)JSON {
