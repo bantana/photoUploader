@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
+@interface MyImageView : UIImageView {
+}
+@end
+
 @interface PhotoViewController : UIViewController {
     IBOutlet UIScrollView *myScrollView;
     NSString *UserID;
@@ -16,6 +21,7 @@
     CGRect screenBounds;
     UIActivityIndicatorView *myIndicator;
     UILabel *photoCount;
+    MyImageView *blockImage;
 }
 
 -(void)getPhotos;

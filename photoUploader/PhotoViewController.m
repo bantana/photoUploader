@@ -9,12 +9,34 @@
 #import "PhotoViewController.h"
 #import "SBJson.h"
 
+@implementation MyImageView
+
+
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    
+    if (touch.view.tag > 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You touched me!"
+                                                        message:[NSString stringWithFormat:@"You touched the button \n with tag = %i",touch.view.tag]
+                                                       delegate:self 
+                                              cancelButtonTitle:@"Ok" 
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    NSLog(@"tag=%@", [NSString stringWithFormat:@"%i", touch.view.tag]);
+}
+
+@end
+
 @implementation PhotoViewController
 
 
 -(void)getPhotos
 {    
     [myIndicator startAnimating];
+    NSLog(@"logging");
     
     NSString *post =[NSString stringWithFormat:@"?userID=%@",UserID];
     
@@ -57,9 +79,11 @@
     CGRect blockFrame;
     blockFrame.size = CGSizeMake(thumbSize,thumbSize);
     blockFrame.origin = CGPointMake(currentX,currentY);
-    UIImageView * blockImage = [[UIImageView alloc] initWithFrame:blockFrame];
+    blockImage = [[MyImageView alloc] initWithFrame:blockFrame];
     
+    blockImage.userInteractionEnabled = YES;
     [blockImage setImage:image];
+    [blockImage setTag:i];
     [blockImage setBackgroundColor:[UIColor blackColor]];
     [myScrollView insertSubview:blockImage belowSubview:myIndicator]; //UIImageView
     
@@ -106,7 +130,7 @@
     [photoCount setBackgroundColor:[UIColor clearColor]];
     [photoCount setText:@"0 photos"];
     [myScrollView addSubview:photoCount];
-    
+   
     myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	myIndicator.center = CGPointMake(160, 180);
 	myIndicator.hidesWhenStopped = YES;
