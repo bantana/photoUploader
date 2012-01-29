@@ -73,7 +73,6 @@
     }
     else if (textField.tag == 2){
         [passWordField resignFirstResponder];
-        NSLog(@"here");
         [self login:(id)self];
     }
     return YES;
