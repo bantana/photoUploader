@@ -27,6 +27,11 @@
 		C714673414BD3C2F0051B425 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C714673214BD3C2F0051B425 /* InfoPlist.strings */; };
 		C714673714BD3C2F0051B425 /* photoUploaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C714673614BD3C2F0051B425 /* photoUploaderTests.m */; };
 		C734976014C3B79800E297AA /* EPUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = C734975F14C3B79800E297AA /* EPUploader.m */; };
+		C73AD88B14D643AE000463D5 /* icon_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = C73AD88914D643AE000463D5 /* icon_sm.png */; };
+		C73AD88E14D643D3000463D5 /* icon_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = C73AD88D14D643D3000463D5 /* icon_retina.png */; };
+		C73AD89014D643DD000463D5 /* icon_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = C73AD88F14D643DD000463D5 /* icon_sm.png */; };
+		C73AD89714D64540000463D5 /* icon_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = C73AD88814D643AE000463D5 /* icon_retina.png */; };
+		C73AD89814D64548000463D5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C73AD89314D64407000463D5 /* Default@2x.png */; };
 		C73D534014C7976A00B44A51 /* loginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73D533F14C7976A00B44A51 /* loginViewController.m */; };
 		C77DDF8F14CCFC3A00CAE681 /* registerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77DDF8E14CCFC3A00CAE681 /* registerViewController.m */; };
 		C796820314D0CBA10010B0C7 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = C79681EB14D0CBA10010B0C7 /* NSObject+SBJson.m */; };
@@ -42,6 +47,8 @@
 		C796820D14D0CBA10010B0C7 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = C796820014D0CBA10010B0C7 /* SBJsonUTF8Stream.m */; };
 		C796820E14D0CBA10010B0C7 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = C796820214D0CBA10010B0C7 /* SBJsonWriter.m */; };
 		C7AF2D6714CF8B7A0011BD91 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AF2D6614CF8B7A0011BD91 /* LoginModel.m */; };
+		C7BDF88D14D78D1600B3960D /* PhotoArrayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BDF88C14D78D1600B3960D /* PhotoArrayManager.m */; };
+		C7CB71AD14D5D48F0046CFF5 /* LargePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CB71AC14D5D48F0046CFF5 /* LargePhotoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +90,12 @@
 		C714673614BD3C2F0051B425 /* photoUploaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = photoUploaderTests.m; sourceTree = "<group>"; };
 		C734975E14C3B79800E297AA /* EPUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPUploader.h; sourceTree = "<group>"; };
 		C734975F14C3B79800E297AA /* EPUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPUploader.m; sourceTree = "<group>"; };
+		C73AD88814D643AE000463D5 /* icon_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_retina.png; sourceTree = "<group>"; };
+		C73AD88914D643AE000463D5 /* icon_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_sm.png; sourceTree = "<group>"; };
+		C73AD88D14D643D3000463D5 /* icon_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_retina.png; sourceTree = "<group>"; };
+		C73AD88F14D643DD000463D5 /* icon_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_sm.png; sourceTree = "<group>"; };
+		C73AD89114D643FE000463D5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		C73AD89314D64407000463D5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		C73D533E14C7976A00B44A51 /* loginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginViewController.h; sourceTree = "<group>"; };
 		C73D533F14C7976A00B44A51 /* loginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginViewController.m; sourceTree = "<group>"; };
 		C77DDF8D14CCFC3A00CAE681 /* registerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerViewController.h; sourceTree = "<group>"; };
@@ -114,6 +127,10 @@
 		C796820214D0CBA10010B0C7 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = photoUploader/SBJSON/SBJsonWriter.m; sourceTree = "<group>"; };
 		C7AF2D6514CF8B7A0011BD91 /* LoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
 		C7AF2D6614CF8B7A0011BD91 /* LoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginModel.m; sourceTree = "<group>"; };
+		C7BDF88B14D78D1600B3960D /* PhotoArrayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoArrayManager.h; sourceTree = "<group>"; };
+		C7BDF88C14D78D1600B3960D /* PhotoArrayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoArrayManager.m; sourceTree = "<group>"; };
+		C7CB71AB14D5D48F0046CFF5 /* LargePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargePhotoViewController.h; sourceTree = "<group>"; };
+		C7CB71AC14D5D48F0046CFF5 /* LargePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LargePhotoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +160,10 @@
 		C71466EE14BD3C2F0051B425 = {
 			isa = PBXGroup;
 			children = (
+				C73AD89314D64407000463D5 /* Default@2x.png */,
+				C73AD89114D643FE000463D5 /* Default.png */,
+				C73AD88F14D643DD000463D5 /* icon_sm.png */,
+				C73AD88D14D643D3000463D5 /* icon_retina.png */,
 				C714670314BD3C2F0051B425 /* photoUploader */,
 				C714672F14BD3C2F0051B425 /* photoUploaderTests */,
 				C71466FC14BD3C2F0051B425 /* Frameworks */,
@@ -186,6 +207,8 @@
 				C714671A14BD3C2F0051B425 /* first@2x.png */,
 				C714671F14BD3C2F0051B425 /* second.png */,
 				C714672114BD3C2F0051B425 /* second@2x.png */,
+				C73AD88814D643AE000463D5 /* icon_retina.png */,
+				C73AD88914D643AE000463D5 /* icon_sm.png */,
 				C714670414BD3C2F0051B425 /* Supporting Files */,
 			);
 			path = photoUploader;
@@ -290,6 +313,10 @@
 			children = (
 				C714671C14BD3C2F0051B425 /* PhotoViewController.h */,
 				C714671D14BD3C2F0051B425 /* PhotoViewController.m */,
+				C7CB71AB14D5D48F0046CFF5 /* LargePhotoViewController.h */,
+				C7CB71AC14D5D48F0046CFF5 /* LargePhotoViewController.m */,
+				C7BDF88B14D78D1600B3960D /* PhotoArrayManager.h */,
+				C7BDF88C14D78D1600B3960D /* PhotoArrayManager.m */,
 			);
 			name = PhotoViewModel;
 			sourceTree = "<group>";
@@ -372,6 +399,11 @@
 				C714671B14BD3C2F0051B425 /* first@2x.png in Resources */,
 				C714672014BD3C2F0051B425 /* second.png in Resources */,
 				C714672214BD3C2F0051B425 /* second@2x.png in Resources */,
+				C73AD88B14D643AE000463D5 /* icon_sm.png in Resources */,
+				C73AD88E14D643D3000463D5 /* icon_retina.png in Resources */,
+				C73AD89014D643DD000463D5 /* icon_sm.png in Resources */,
+				C73AD89714D64540000463D5 /* icon_retina.png in Resources */,
+				C73AD89814D64548000463D5 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +471,8 @@
 				C796820C14D0CBA10010B0C7 /* SBJsonTokeniser.m in Sources */,
 				C796820D14D0CBA10010B0C7 /* SBJsonUTF8Stream.m in Sources */,
 				C796820E14D0CBA10010B0C7 /* SBJsonWriter.m in Sources */,
+				C7CB71AD14D5D48F0046CFF5 /* LargePhotoViewController.m in Sources */,
+				C7BDF88D14D78D1600B3960D /* PhotoArrayManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

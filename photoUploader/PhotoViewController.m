@@ -7,6 +7,7 @@
 //
 
 #import "PhotoViewController.h"
+#import "PhotoArrayManager.h"
 #import "SBJson.h"
 
 @implementation MyImageView
@@ -17,26 +18,41 @@
     UITouch *touch = [[event allTouches] anyObject];
     
     if (touch.view.tag > 0) {
+        PhotoArrayManager *arrayManager = [PhotoArrayManager sharedManager];
+        
+         NSString *currentImage = [arrayManager.photoDict valueForKey:[NSString stringWithFormat:@"%i", (touch.view.tag-1)]];
+        
+        currentImage = [currentImage stringByReplacingOccurrencesOfString:@"_thb"
+                                                      withString:@""];
+        
+         NSLog(@"currentImage - %@",currentImage);
+        
+        
+        //AppDelegate *dataCenter = UIApplication.sharedApplication.delegate;
+        
+       // NSString *currentImage = [dataCenter.PhotoDict valueForKey:[NSString stringWithFormat:@"%i", (touch.view.tag-1)]];
+        
+       // NSLog(@"currentImage - %@",currentImage);
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You touched me!"
-                                                        message:[NSString stringWithFormat:@"You touched the button \n with tag = %i",touch.view.tag]
+                                                        message:[NSString stringWithFormat:@"You touched the button \n with tag = %i \n for image: %@",touch.view.tag,currentImage]
                                                        delegate:self 
                                               cancelButtonTitle:@"Ok" 
                                               otherButtonTitles:nil];
         [alert show];
     }
     
-    NSLog(@"tag=%@", [NSString stringWithFormat:@"%i", touch.view.tag]);
 }
 
 @end
 
 @implementation PhotoViewController
 
+@synthesize currentImageTag;
 
 -(void)getPhotos
 {    
     [myIndicator startAnimating];
-    NSLog(@"logging");
     
     NSString *post =[NSString stringWithFormat:@"?userID=%@",UserID];
     
@@ -49,9 +65,18 @@
     NSString *serverOutput = [[NSString alloc] initWithData:dataURL encoding: NSASCIIStringEncoding];
     
     SBJsonParser *parser = [[SBJsonParser alloc] init];
-    JSON = [parser objectWithString:serverOutput error:nil];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    //JSON = [parser objectWithString:serverOutput error:nil];
     
+    //AppDelegate *dataCenter = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    //dataCenter.PhotoDict = [[NSDictionary alloc] initWithDictionary:JSON];
+    
+   // NSLog(@"%@",dataCenter.PhotoDict);
+    
+    arrayManager = [PhotoArrayManager sharedManager];
+    arrayManager.photoDict = [parser objectWithString:serverOutput error:nil];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     NSOperationQueue *queue = [NSOperationQueue new];
     NSInvocationOperation *operation = [[NSInvocationOperation alloc] 
@@ -63,12 +88,12 @@
 
 - (void)loadImage 
 {
-    NSEnumerator *enumerator = [JSON keyEnumerator];
+    NSEnumerator *enumerator = [arrayManager.photoDict keyEnumerator];
     
     id key;
-        
-     while ((key = [enumerator nextObject])) {         
-         UIImage* image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[JSON objectForKey: key]]]];
+
+     while ((key = [enumerator nextObject])) {
+         UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[arrayManager.photoDict objectForKey: key]]]];
          [self performSelectorOnMainThread:@selector(displayImage:) withObject:image waitUntilDone:NO];
      }
 }
@@ -90,15 +115,22 @@
     currentX = currentX + thumbSize + padding;
     [photoCount setText:[NSString stringWithFormat:@"%i photos",i]];
     
-    if ((currentX >= screenBounds.size.width) && i!=[JSON count]) {
+    if ((currentX >= screenBounds.size.width) && i!=[arrayManager.photoDict count]) {
         currentX = padding;
         currentY = currentY + padding + thumbSize;
         [myScrollView setContentSize:CGSizeMake(myScrollView.frame.size.width, (currentY + thumbSize + (padding*3) + photoCount.frame.size.height))];
         photoCount.frame = CGRectMake(((screenBounds.size.width/2) - 36), (currentY + thumbSize + padding), 150, 30);
-    }else if (i==[JSON count]){
+    }else if (i==[arrayManager.photoDict count]){
         [myIndicator stopAnimating];
     }
     i++;
+    [self loadLargeImage];
+}
+
+-(void)loadLargeImage
+{
+    //NSLog(@"photoViewController currentImageTag = %@", currentImageTag);
+    //NSLog(@"%@", [JSON objectForKey:@"1"]);
 }
 
 - (void)didReceiveMemoryWarning
