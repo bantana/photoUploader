@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface PhotoArrayManager : NSObject{
-    NSMutableDictionary *photoDict;
+    NSMutableArray *photoDict;
 }
-@property (nonatomic, strong) NSMutableDictionary *photoDict;
+@property (nonatomic, strong) NSMutableArray *photoDict;
 
 + (id)sharedManager;
 

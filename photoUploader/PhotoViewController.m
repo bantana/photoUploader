@@ -8,47 +8,44 @@
 
 #import "PhotoViewController.h"
 #import "PhotoArrayManager.h"
+#import "LargePhotoViewController.h"
 #import "SBJson.h"
 
-@implementation MyImageView
-
-
--(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [[event allTouches] anyObject];
-    
-    if (touch.view.tag > 0) {
-        PhotoArrayManager *arrayManager = [PhotoArrayManager sharedManager];
-        
-         NSString *currentImage = [arrayManager.photoDict valueForKey:[NSString stringWithFormat:@"%i", (touch.view.tag-1)]];
-        
-        currentImage = [currentImage stringByReplacingOccurrencesOfString:@"_thb"
-                                                      withString:@""];
-        
-         NSLog(@"currentImage - %@",currentImage);
-        
-        
-        //AppDelegate *dataCenter = UIApplication.sharedApplication.delegate;
-        
-       // NSString *currentImage = [dataCenter.PhotoDict valueForKey:[NSString stringWithFormat:@"%i", (touch.view.tag-1)]];
-        
-       // NSLog(@"currentImage - %@",currentImage);
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You touched me!"
-                                                        message:[NSString stringWithFormat:@"You touched the button \n with tag = %i \n for image: %@",touch.view.tag,currentImage]
-                                                       delegate:self 
-                                              cancelButtonTitle:@"Ok" 
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
-}
-
-@end
 
 @implementation PhotoViewController
 
 @synthesize currentImageTag;
+
+-(void)buttonPressed:(id)sender
+{
+    if ([sender tag]) {
+        
+        
+        currentImage = [arrayManager.photoDict objectAtIndex:[sender tag]];
+        
+        currentImage = [currentImage stringByReplacingOccurrencesOfString:@"_thb"
+                                                               withString:@""];
+
+        
+        [self performSegueWithIdentifier:@"displayLargePhoto" sender:currentImage];
+        
+    }
+    
+    /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You touched me!"
+                                                    message:[NSString stringWithFormat:@"Image: %i",[sender tag]]
+                                                   delegate:self 
+                                          cancelButtonTitle:@"Ok" 
+                                          otherButtonTitles:nil];
+    [alert show];*/
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"displayLargePhoto"]) {
+        LargePhotoViewController *lpvc = (LargePhotoViewController *)segue.destinationViewController;
+        lpvc.currentImage = currentImage;
+    }
+}
 
 -(void)getPhotos
 {    
@@ -88,12 +85,15 @@
 
 - (void)loadImage 
 {
-    NSEnumerator *enumerator = [arrayManager.photoDict keyEnumerator];
+    NSEnumerator *enumerator = [arrayManager.photoDict objectEnumerator];
     
     id key;
 
      while ((key = [enumerator nextObject])) {
-         UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[arrayManager.photoDict objectForKey: key]]]];
+         UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:key]]];
+         blockImage = [UIButton buttonWithType:UIButtonTypeCustom];
+         [blockImage setTag:[arrayManager.photoDict indexOfObject:key]];
+         
          [self performSelectorOnMainThread:@selector(displayImage:) withObject:image waitUntilDone:NO];
      }
 }
@@ -104,12 +104,15 @@
     CGRect blockFrame;
     blockFrame.size = CGSizeMake(thumbSize,thumbSize);
     blockFrame.origin = CGPointMake(currentX,currentY);
-    blockImage = [[MyImageView alloc] initWithFrame:blockFrame];
     
-    blockImage.userInteractionEnabled = YES;
-    [blockImage setImage:image];
-    [blockImage setTag:i];
+    blockImage.frame = blockFrame;
+    //blockImage = [[MyImageView alloc] initWithFrame:blockFrame];
+    
+    //blockImage.userInteractionEnabled = YES;
+    [blockImage setImage:image forState:UIButtonTypeCustom];
+    
     [blockImage setBackgroundColor:[UIColor blackColor]];
+    [blockImage addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [myScrollView insertSubview:blockImage belowSubview:myIndicator]; //UIImageView
     
     currentX = currentX + thumbSize + padding;
@@ -124,13 +127,6 @@
         [myIndicator stopAnimating];
     }
     i++;
-    [self loadLargeImage];
-}
-
--(void)loadLargeImage
-{
-    //NSLog(@"photoViewController currentImageTag = %@", currentImageTag);
-    //NSLog(@"%@", [JSON objectForKey:@"1"]);
 }
 
 - (void)didReceiveMemoryWarning

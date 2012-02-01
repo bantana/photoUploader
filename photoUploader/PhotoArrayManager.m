@@ -26,7 +26,7 @@
 -(id)init
 {
     if( (self=[super init]) ) {
-        photoDict = [[NSMutableDictionary alloc] init];
+        photoDict = [[NSMutableArray alloc] init];
     }
     return self;
 }

@@ -10,10 +10,6 @@
 #import "PhotoArrayManager.h"
 
 
-@interface MyImageView : UIImageView {
-}
-@end
-
 @interface PhotoViewController : UIViewController {
     IBOutlet UIScrollView *myScrollView;
     NSString *UserID;
@@ -23,8 +19,10 @@
     CGRect screenBounds;
     UIActivityIndicatorView *myIndicator;
     UILabel *photoCount;
-    MyImageView *blockImage;
+    UIButton *blockImage;
+    //MyImageView *blockImage;
     id currentImageTag;
+    NSString *currentImage;
 }
 
 @property (nonatomic, retain) id currentImageTag;
@@ -32,6 +30,6 @@
 -(void)getPhotos;
 -(void)loadImage;
 -(void)displayImage:(UIImage *)image;
--(void)loadLargeImage;
+-(void)buttonPressed:(id)sender;
 
 @end

@@ -81,7 +81,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="myScrollView" destination="3oM-45-YAj" id="NVI-7b-gn3"/>
-                        <segue destination="O7N-Qz-WQj" kind="modal" identifier="displayLargePhoto" modalTransitionStyle="crossDissolve" id="2OH-E5-23L"/>
+                        <segue destination="O7N-Qz-WQj" kind="modal" identifier="displayLargePhoto" id="2OH-E5-23L"/>
                     </connections>
                 </viewController>
             </objects>
@@ -102,20 +102,29 @@
                                     <navigationItem title="Title" id="LGD-xy-wSV">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="gS1-vX-bnZ">
                                             <connections>
-                                                <segue destination="3" kind="modal" id="BmE-Kz-PkL"/>
+                                                <action selector="backButton" destination="O7N-Qz-WQj" id="iGH-s6-ivF"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="hvP-1V-T6u">
+                                <rect key="frame" x="0.0" y="44" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="44"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="M1N-zg-VBf"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <connections>
+                        <outlet property="PhotoScrollView" destination="hvP-1V-T6u" id="SBk-ql-rc0"/>
+                        <outlet property="dismiss" destination="gS1-vX-bnZ" id="K9k-RU-Fow"/>
+                    </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1072" y="486"/>
+            <point key="canvasLocation" x="1059" y="477"/>
         </scene>
         <scene sceneID="cHF-vv-LnK">
             <objects>
@@ -314,6 +323,11 @@
     <classes>
         <class className="LargePhotoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LargePhotoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backButton"/>
+                <relationship kind="outlet" name="PhotoScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="dismiss" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="PhotoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoViewController.h"/>
