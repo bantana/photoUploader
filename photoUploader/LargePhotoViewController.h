@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhotoArrayManager.h"
 
 @interface LargePhotoViewController : UIViewController <UIScrollViewDelegate>{
+    PhotoArrayManager *arrayManager;
     NSString *currentImage;
     UIImageView *imageView;
+    UIActivityIndicatorView *myIndicator;
 }
 
 @property (nonatomic, strong) UIImageView *imageView;
@@ -18,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *PhotoScrollView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *dismiss;
 
+-(void)queueImage;
 -(void)loadImage;
+-(void)displayImage:(UIImage *)image;
 -(IBAction)backButton;
 @end

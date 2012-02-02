@@ -10,7 +10,7 @@
 
 @implementation PhotoArrayManager
 
-@synthesize photoDict;
+@synthesize thumbPhotoArray,largePhotoDict;
 
 +(id)sharedManager 
 {
@@ -26,7 +26,8 @@
 -(id)init
 {
     if( (self=[super init]) ) {
-        photoDict = [[NSMutableArray alloc] init];
+        thumbPhotoArray = [[NSMutableArray alloc] init];
+        largePhotoDict = [[NSMutableDictionary alloc] init];
     }
     return self;
 }

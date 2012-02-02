@@ -41,69 +41,95 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
+    
+    arrayManager = [PhotoArrayManager sharedManager];
+    
+    PhotoScrollView.delegate = self;
+    [PhotoScrollView setBackgroundColor:[UIColor blackColor]];
+    
+    myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	myIndicator.center = CGPointMake(160, 220);
+	myIndicator.hidesWhenStopped = YES;
+    [PhotoScrollView addSubview:myIndicator];
+    
     [super viewDidLoad];
-    [self loadImage];
+    [self queueImage];
+}
+
+-(void)queueImage
+{
+    [myIndicator startAnimating];
+    NSOperationQueue *queue = [NSOperationQueue new];
+    NSInvocationOperation *operation = [[NSInvocationOperation alloc] 
+                                        initWithTarget:self
+                                        selector:@selector(loadImage) 
+                                        object:nil];
+    [queue addOperation:operation];
 }
 
 -(void)loadImage
 {
-    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:currentImage]]];
+    if (![arrayManager.largePhotoDict objectForKey:currentImage]) {
+        UIImage *serverImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:currentImage]]];
+        [arrayManager.largePhotoDict setObject:serverImage forKey:currentImage];
+    }
+    UIImage *image = [[UIImage alloc] init];
+    image = [arrayManager.largePhotoDict objectForKey:currentImage];
+    [self performSelectorOnMainThread:@selector(displayImage:) withObject:image waitUntilDone:NO];
+}
 
+-(void)displayImage:(UIImage *)image
+{    
     imageView = [[UIImageView alloc] initWithImage:image];
     imageView.frame = CGRectMake(0, 0, imageView.image.size.width, imageView.image.size.height);
     /*float minimumScale = [PhotoScrollView frame].size.width  / [imageView frame].size.width;
-    [PhotoScrollView setMinimumZoomScale:minimumScale];
-    [PhotoScrollView setZoomScale:minimumScale];
-    [PhotoScrollView setMaximumZoomScale:10];
-    [PhotoScrollView setContentSize:CGSizeMake(imageView.image.size.width * minimumScale, imageView.image.size.height * minimumScale)];
-    // Center the photo. Again we push the center point up by 44 pixels
-    // to account for the translucent navigation bar.
-    CGPoint scrollCenter = [PhotoScrollView center];
-    [imageView setCenter:CGPointMake(scrollCenter.x, scrollCenter.y - 44.0)];
-
-    PhotoScrollView.delegate = self;
-    [PhotoScrollView setScrollEnabled:YES];
-    [PhotoScrollView setContentSize:imageView.frame.size];*/
+     [PhotoScrollView setMinimumZoomScale:minimumScale];
+     [PhotoScrollView setZoomScale:minimumScale];
+     [PhotoScrollView setMaximumZoomScale:10];
+     [PhotoScrollView setContentSize:CGSizeMake(imageView.image.size.width * minimumScale, imageView.image.size.height * minimumScale)];
+     // Center the photo. Again we push the center point up by 44 pixels
+     // to account for the translucent navigation bar.
+     CGPoint scrollCenter = [PhotoScrollView center];
+     [imageView setCenter:CGPointMake(scrollCenter.x, scrollCenter.y - 44.0)];
+     
+     PhotoScrollView.delegate = self;
+     [PhotoScrollView setScrollEnabled:YES];
+     [PhotoScrollView setContentSize:imageView.frame.size];*/
     CGSize photoSize = [image size];
-    NSLog(@"photosize = %@",NSStringFromCGSize(photoSize));
+    
     // Configure zooming.
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
-    NSLog(@"screenSize = %@",NSStringFromCGSize(screenSize));
+    
     CGFloat widthRatio = screenSize.width / image.size.width;
-    NSLog(@"widthRatio = %f",widthRatio);
+    
     CGFloat heightRatio = screenSize.height / image.size.height;
-    NSLog(@"heightRatio = %f",heightRatio);
+    
     CGFloat initialZoom = (widthRatio > heightRatio) ? heightRatio : widthRatio;
-    NSLog(@"initialZoom = %f",initialZoom);
-    PhotoScrollView.delegate = self;
-    [PhotoScrollView setBackgroundColor:[UIColor blackColor]];
+    
     [PhotoScrollView setMaximumZoomScale:3.0];
     [PhotoScrollView setMinimumZoomScale:initialZoom];
     [PhotoScrollView setZoomScale:initialZoom animated:NO];
-    NSLog(@"current zoomScale: %f", PhotoScrollView.zoomScale);
-    [PhotoScrollView setBouncesZoom:YES];
-    [PhotoScrollView setContentSize:CGSizeMake(photoSize.width * initialZoom,
-                                          photoSize.height * initialZoom)];
-    NSLog(@"PhotoScrollView setContentSize = %@", NSStringFromCGSize(CGSizeMake(photoSize.width * initialZoom,
-                                                                photoSize.height * initialZoom)));
     
-    // Center the photo. Again we push the center point up by 44 pixels
-    // to account for the translucent navigation bar.
-    CGPoint scrollCenter = [PhotoScrollView center];
+    [PhotoScrollView setBouncesZoom:YES];
+    [PhotoScrollView setClipsToBounds:YES];
+    [PhotoScrollView setContentSize:CGSizeMake(photoSize.width * initialZoom,photoSize.height * initialZoom)];
+    
+    CGPoint scrollCenter = [PhotoScrollView center];    
+    
     [imageView setCenter:CGPointMake(scrollCenter.x,
-                                     scrollCenter.y-60)];
-    NSLog(@"imageView setCenter = %@", NSStringFromCGPoint(CGPointMake(scrollCenter.x,
-                                                   scrollCenter.y-60)));
+                                     scrollCenter.y-10)];
+    
+    [myIndicator stopAnimating];
     [PhotoScrollView addSubview:imageView];
     
     
     
     /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You touched me!"
-                                                    message:[NSString stringWithFormat:@"image: %@",currentImage]
-                                                   delegate:self 
-                                          cancelButtonTitle:@"Ok" 
-                                          otherButtonTitles:nil];
-    [alert show];*/
+     message:[NSString stringWithFormat:@"image: %@",currentImage]
+     delegate:self 
+     cancelButtonTitle:@"Ok" 
+     otherButtonTitles:nil];
+     [alert show];*/
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

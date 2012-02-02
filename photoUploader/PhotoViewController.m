@@ -18,32 +18,28 @@
 
 -(void)buttonPressed:(id)sender
 {
-    if ([sender tag]) {
-        
-        [myIndicator startAnimating];
-        currentImage = [arrayManager.photoDict objectAtIndex:[sender tag]];
-        
-        currentImage = [currentImage stringByReplacingOccurrencesOfString:@"_thb"
-                                                               withString:@""];
-
-        
-        [self performSegueWithIdentifier:@"displayLargePhoto" sender:currentImage];
-        [myIndicator stopAnimating];
-        
-    }
+    
+    currentImage = [arrayManager.thumbPhotoArray objectAtIndex:[sender tag]];
+    
+    currentImage = [currentImage stringByReplacingOccurrencesOfString:@"_thb"
+                                                           withString:@""];
+    
+    
+    [self performSegueWithIdentifier:@"displayLargePhoto" sender:currentImage];
     
     /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You touched me!"
-                                                    message:[NSString stringWithFormat:@"Image: %i",[sender tag]]
-                                                   delegate:self 
-                                          cancelButtonTitle:@"Ok" 
-                                          otherButtonTitles:nil];
-    [alert show];*/
+     message:[NSString stringWithFormat:@"Image: %i",[sender tag]]
+     delegate:self 
+     cancelButtonTitle:@"Ok" 
+     otherButtonTitles:nil];
+     [alert show];*/
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"displayLargePhoto"]) {
         LargePhotoViewController *lpvc = (LargePhotoViewController *)segue.destinationViewController;
+        NSLog(@"%@",currentImage);
         lpvc.currentImage = currentImage;
     }
 }
@@ -72,7 +68,7 @@
    // NSLog(@"%@",dataCenter.PhotoDict);
     
     arrayManager = [PhotoArrayManager sharedManager];
-    arrayManager.photoDict = [parser objectWithString:serverOutput error:nil];
+    arrayManager.thumbPhotoArray = [parser objectWithString:serverOutput error:nil];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
@@ -86,14 +82,14 @@
 
 - (void)loadImage 
 {
-    NSEnumerator *enumerator = [arrayManager.photoDict objectEnumerator];
+    NSEnumerator *enumerator = [arrayManager.thumbPhotoArray objectEnumerator];
     
     id key;
 
      while ((key = [enumerator nextObject])) {
          UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:key]]];
          blockImage = [UIButton buttonWithType:UIButtonTypeCustom];
-         [blockImage setTag:[arrayManager.photoDict indexOfObject:key]];
+         [blockImage setTag:[arrayManager.thumbPhotoArray indexOfObject:key]];
          
          [self performSelectorOnMainThread:@selector(displayImage:) withObject:image waitUntilDone:NO];
      }
@@ -119,12 +115,12 @@
     currentX = currentX + thumbSize + padding;
     [photoCount setText:[NSString stringWithFormat:@"%i photos",i]];
     
-    if ((currentX >= screenBounds.size.width) && i!=[arrayManager.photoDict count]) {
+    if ((currentX >= screenBounds.size.width) && i!=[arrayManager.thumbPhotoArray count]) {
         currentX = padding;
         currentY = currentY + padding + thumbSize;
         [myScrollView setContentSize:CGSizeMake(myScrollView.frame.size.width, (currentY + thumbSize + (padding*3) + photoCount.frame.size.height))];
         photoCount.frame = CGRectMake(((screenBounds.size.width/2) - 36), (currentY + thumbSize + padding), 150, 30);
-    }else if (i==[arrayManager.photoDict count]){
+    }else if (i==[arrayManager.thumbPhotoArray count]){
         [myIndicator stopAnimating];
     }
     i++;
