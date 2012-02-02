@@ -82,19 +82,6 @@
 {    
     imageView = [[UIImageView alloc] initWithImage:image];
     imageView.frame = CGRectMake(0, 0, imageView.image.size.width, imageView.image.size.height);
-    /*float minimumScale = [PhotoScrollView frame].size.width  / [imageView frame].size.width;
-     [PhotoScrollView setMinimumZoomScale:minimumScale];
-     [PhotoScrollView setZoomScale:minimumScale];
-     [PhotoScrollView setMaximumZoomScale:10];
-     [PhotoScrollView setContentSize:CGSizeMake(imageView.image.size.width * minimumScale, imageView.image.size.height * minimumScale)];
-     // Center the photo. Again we push the center point up by 44 pixels
-     // to account for the translucent navigation bar.
-     CGPoint scrollCenter = [PhotoScrollView center];
-     [imageView setCenter:CGPointMake(scrollCenter.x, scrollCenter.y - 44.0)];
-     
-     PhotoScrollView.delegate = self;
-     [PhotoScrollView setScrollEnabled:YES];
-     [PhotoScrollView setContentSize:imageView.frame.size];*/
     CGSize photoSize = [image size];
     
     // Configure zooming.
@@ -121,15 +108,6 @@
     
     [myIndicator stopAnimating];
     [PhotoScrollView addSubview:imageView];
-    
-    
-    
-    /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You touched me!"
-     message:[NSString stringWithFormat:@"image: %@",currentImage]
-     delegate:self 
-     cancelButtonTitle:@"Ok" 
-     otherButtonTitles:nil];
-     [alert show];*/
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
