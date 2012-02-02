@@ -20,7 +20,7 @@
 {
     if ([sender tag]) {
         
-        
+        [myIndicator startAnimating];
         currentImage = [arrayManager.photoDict objectAtIndex:[sender tag]];
         
         currentImage = [currentImage stringByReplacingOccurrencesOfString:@"_thb"
@@ -28,6 +28,7 @@
 
         
         [self performSegueWithIdentifier:@"displayLargePhoto" sender:currentImage];
+        [myIndicator stopAnimating];
         
     }
     
